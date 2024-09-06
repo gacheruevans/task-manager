@@ -10,7 +10,6 @@ import {
 import {
     getUserById,
     getUsers,
-    createUser,
     editUser,
     deleteUser,
 } from '../controllers/user';
@@ -30,7 +29,6 @@ route.delete('/task/:id',authorized, deleteTask);
 
 route.get('/user/:id',authorized, getUserById);
 route.get('/users',authorized, getUsers);
-route.post('/user',authorized, createUser);
 route.put('/user/:id',authorized, editUser);
 route.delete('/user/:id',authorized, deleteUser);
 

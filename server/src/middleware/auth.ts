@@ -32,18 +32,26 @@ export const authorized = async(req: Request | any, res: Response, next: NextFun
 };
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
     const { email, password, confirm_password } = req.body;
     const hashPassword = bcryptjs.hashSync(password, 10);
 
-    if (confirm_password != password) {
+    console.log(confirm_password !== password);
+    if (confirm_password !== password) {
         res.status(401).json({
             message: 'Password and Confirm Password Do Not Match!',
         });
     } else {
         try {
+            const findUser = await User.findOne({ email });
+            if (findUser) {
+                console.log('Find User--->', findUser);
+                return res.status(403).json({message: 'User already Exist!'});
+            }
+           
             const newUser = new User({ email, password: hashPassword });
             await newUser.save();
-            res.status(201).json({
+            return res.status(201).json({
                 message: 'User Created Successfully',
             });
         } catch (error) {
@@ -53,10 +61,8 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const signIn = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
-    const { email, password } = req.body;
-
     try {
+        const { email, password } = req.body;
         const findUser = await User.findOne({ email });
         if (!findUser) throw next(errorHandler(404,'User does not Exist!'));
         const validPassword = bcryptjs.compareSync(password, findUser.password);
@@ -67,7 +73,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         res
             .cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)})
             .status(200)
-            .json(userInfo);
+            .json(userInfo)
     } catch (error) {
         next(error);
     }

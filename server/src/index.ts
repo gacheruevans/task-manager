@@ -1,21 +1,60 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
+import http from 'http';
+import cors from 'cors';
 import routes from './routes/routes';
 import { PORT } from './config/config';
 import { connectDB } from './config/db';
+import { ServerSocket } from './sockets';
 
 const app = express();
-app.use(express.json());
 
+//Establish connection to the Database
 connectDB(); 
 
+// Create an HTTP server to work with both Express and Socket.IO
+const httpServer = http.createServer(app);
+
+// Start the socket
+new ServerSocket(httpServer);
+
+// Log requests
+app.use((req, res, next) => {
+    console.info(`METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+
+    res.on('finish', () => {
+        console.info(`METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
+    });
+
+    next();
+});
+
+// Middlewares
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
+app.use(cors);
+
+// Healthcheck 
+app.get('/ping', (req, res, next) => {
+    return res.status(200).json({ hello: 'world!' });
+});
+
+// Socket Information 
+app.get('/status', (req, res, next) => {
+    return res.status(200).json({ users: ServerSocket.instance?.users });
+});
+
+// Route
 app.use('/api', routes);
 
 app.get('/', (req, res)=> {
     return res.status(200).json({message: "Welcome to the tasking API"});
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+//Error handling
+app.use((req, res,next) => {
+    const error = new Error('Error 404! Not Found');
+    res.status(404).json({message: error.message});
+})
 
-export default app;
+// Start backend server
+httpServer.listen(PORT, () => console.info(`Backend server is running on: http://localhost:${PORT}`));

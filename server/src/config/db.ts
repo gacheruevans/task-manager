@@ -6,13 +6,10 @@ export const connectDB = async() => {
         await mongoose.connect(MONGO_DB_URL, { 
             useNewUrlParser: true, 
             useUnifiedTopology: true
-        } as ConnectOptions );
-
-        const connection = mongoose.connection;
-        connection.once('open', () => {
+        } as ConnectOptions ).then(() => {
             console.log('MongoDB Database connection established successfully');
         });
-        
+
     } catch (error) {
         throw new Error(`MongoDB Database connection failed: ${error}`);
     }

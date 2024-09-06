@@ -1,7 +1,7 @@
 version: "3.8" # docker-compose version
 
 services: # services which our app going to use. (list of containers we want to create)
-  backend-db: # container name
+  tasksdb-dev: # container name
     image: mongo:latest # which image container will build on
     restart: always
     environment:
@@ -10,21 +10,21 @@ services: # services which our app going to use. (list of containers we want to 
     ports:
       - "27017:27017"
     networks: # adding network
-      - backend-server
+      - devbackend-server
     volumes:
       - mongo-data:/data/db
 
-  backend-server:
+  devbackend-server:
     build: . # build the Docker image for the service using the Dockerfile located in the current directory
     ports:
-      - "4000:4000"
+      - "5000:5000"
     networks: # adding network
-      - backend-server
+      - devbackend-server
     depends_on:
-      - backend-db
+      - tasksdb-dev
 
 networks: # allow services to talk to each other while providing isolation from other docker container, running on the same host
-  backend-server:
+  devbackend-server:
     driver: bridge
 
 volumes: # enable persistence of database data across container restart

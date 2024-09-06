@@ -2,14 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './pages/Home';
+import  { TaskProvider }  from './contexts';
+// import SocketContextComponent from './components/Socket';
+import { BrowserRouter } from 'react-router-dom'
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Home />
+    {/* <SocketContextComponent> */}
+      <TaskProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </TaskProvider>
+    {/* </SocketContextComponent> */}
   </React.StrictMode>
 );
 
