@@ -32,16 +32,10 @@ export const authorized = async(req: Request | any, res: Response, next: NextFun
 };
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
-    const { email, password, confirm_password } = req.body;
+    const { email, password, confirmPassword } = req.body;
     const hashPassword = bcryptjs.hashSync(password, 10);
 
-    console.log(confirm_password !== password);
-    if (confirm_password !== password) {
-        res.status(401).json({
-            message: 'Password and Confirm Password Do Not Match!',
-        });
-    } else {
+    if (confirmPassword === password) {
         try {
             const findUser = await User.findOne({ email });
             if (findUser) {
@@ -57,6 +51,11 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         } catch (error) {
             next(error);
         }
+        
+    } else {
+        res.status(401).json({
+            message: 'Password and Confirm Password Do Not Match!',
+        });
     }
 };
 

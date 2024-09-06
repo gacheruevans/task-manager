@@ -14,6 +14,8 @@ const Register = () => {
   const navigate = useNavigate();
 
   async function onSubmit(e: { preventDefault: () => void; }) {
+    e.preventDefault();
+    
     const userData = {
       email: email,
       password: password,
@@ -32,7 +34,8 @@ const Register = () => {
           navigate('/');
         }
         if(res.status === 201) {
-          navigate('/login'); 
+          alert('User created successfully');
+          navigate('/'); 
         }
       });
     } catch (error) {
@@ -46,17 +49,17 @@ const Register = () => {
           <form action="POST">
             <div className='relative my-6'>
               <input onChange={(e)=> {setEmail(e.target.value)}} type='email' name='email' id='email' className='block w-72 py-2.3 px-0 text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-black focus:border-blue-600 peer'/>
-              <label htmlFor='' className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Email</label>
+              <label className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Email</label>
               <BiUser className='absolute top-0 right-4'/>
             </div>
             <div className='relative my-6'>
               <input onChange={(e)=> {setPassword(e.target.value)}} type='password' name='password' id='password' className='block w-72 py-2.3 px-0 text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-black focus:border-blue-600 peer'/>
-              <label htmlFor='' className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Password</label>
+              <label className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Password</label>
               <AiOutlineUnlock className='absolute top-0 right-4'/>
             </div>
              <div className='relative my-6'>
               <input onChange={(e)=> {setConfirmPassword(e.target.value)}} type='password' name='confirmPassword' id='confirmPassword' className='block w-72 py-2.3 px-0 text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-black focus:border-blue-600 peer'/>
-              <label htmlFor='' className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Password</label>
+              <label className='absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Confrim Password</label>
               <AiOutlineUnlock className='absolute top-0 right-4'/>
             </div>
             <button className='w-full mb-4 text-[18px] mt-6 rounded-full bg-slate-200 text-emerald-800 hover:bg-emerald-600 hover:text-white py-2 transition-colors duration-300' type='submit' onClick={onSubmit} >Register</button>

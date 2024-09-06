@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
 
 import { Link, useNavigate } from 'react-router-dom';
 import {BiUser} from 'react-icons/bi';
@@ -14,6 +13,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   async function onSubmit(e: { preventDefault: () => void; }) {
+    e.preventDefault();
     const userData = {
       email: email,
       password: password,

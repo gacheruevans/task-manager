@@ -6,13 +6,11 @@ import Home from './pages/Home';
 const App: React.FC = () => {
   return (
     <div className='text-black h-[100vh] flex justify-center items-center bg-cover'>
-        
         <Routes>
             <Route path='/' element={ <Login />} />
             <Route path='register' element={ <Register />} />
             <Route path='home' element={ <Home />} />
         </Routes>
-    
     </div>
   )
 }

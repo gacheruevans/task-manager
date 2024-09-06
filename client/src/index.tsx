@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import  { TaskProvider }  from './contexts';
-// import SocketContextComponent from './components/Socket';
+import SocketContextComponent from './components/Socket';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
 
@@ -12,13 +12,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* <SocketContextComponent> */}
+    <SocketContextComponent>
       <TaskProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </TaskProvider>
-    {/* </SocketContextComponent> */}
+    </SocketContextComponent>
   </React.StrictMode>
 );
 
