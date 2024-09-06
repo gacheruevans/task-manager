@@ -1,7 +1,6 @@
 import { Server as HTTPServer } from 'http';
 import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
-import jwt from 'socketio-jwt';
 
 export class ServerSocket {
     public static instance: ServerSocket | undefined;
@@ -20,6 +19,9 @@ export class ServerSocket {
                 origin: '*',
             }
         });
+
+        this.io.on('connect', this.StartListeners);
+        console.info('Socket IO started');
     }
 
     StartListeners = (socket: Socket) => {

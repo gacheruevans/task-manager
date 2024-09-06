@@ -24,9 +24,11 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
 
       // Start the event listeners
         StartListeners();
+
       // Send the handshake
         SendHanshake();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const StartListeners = () => {
@@ -58,8 +60,9 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
     };
     const SendHanshake = () => {
       console.info('Sending hanshake to server ...');
-
+      
       socket.emit('handshake', (uid: string, users: string[]) => {
+        console.log("Nothing Happening!!")
         console.log('User handshake callback message received');
         SocketDispatch({type: 'update_uid', payload:uid});
         SocketDispatch({type: 'update_users', payload:users});
@@ -68,8 +71,8 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
       });
     };
     
-    if(loading) return <p>Loading socket IO ....</p>
-     return <SocketContextProvider value={{ SocketState, SocketDispatch}}>{children}</SocketContextProvider>;
+    if(loading) return <p>Loading socket IO ....</p>;
+    return <SocketContextProvider value={{ SocketState, SocketDispatch}}>{children}</SocketContextProvider>;
 };
 
 export default SocketContextComponent

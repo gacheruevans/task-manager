@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTasks } from '../contexts';
+import { useTasks } from '../contexts/task';
 
 export const AddTask = () => {
     const [text, setText] = useState('');

@@ -2,24 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import  { TaskProvider }  from './contexts';
-import SocketContextComponent from './components/Socket';
-import { BrowserRouter } from 'react-router-dom'
+import  { TaskProvider }  from './contexts/task';
+import SocketContextComponent  from './components/Socket';
 import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <SocketContextComponent>
+  <SocketContextComponent>
+    <BrowserRouter>
       <TaskProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </TaskProvider>
-    </SocketContextComponent>
-  </React.StrictMode>
+    </BrowserRouter>
+  </SocketContextComponent>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -16,7 +16,7 @@
     "Redux",
     "MongoDB"
   ],
-  "author": "EVans Gacheru Munene",
+  "author": "Evans Gacheru Munene",
   "license": "ISC",
   "description": "Real time task manage.",
   "dependencies": {

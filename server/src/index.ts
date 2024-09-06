@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
 import http from 'http';
-import { Server } from 'socket.io';
 import cors from 'cors';
 import routes from './routes/routes';
 import { PORT } from './config/config';
@@ -32,6 +31,7 @@ app.use((req, res, next) => {
 // Middlewares
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+app.use(cors);
 
 /** Rules of our API */
 app.use((req, res, next) => {
