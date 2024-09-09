@@ -12,8 +12,8 @@ export class ServerSocket {
         ServerSocket.instance = this;
         this.users = {}
         this.io = new Server(server, {
-            pingInterval: 10000,
-            pingTimeout: 5000,
+            pingInterval: 20000,
+            pingTimeout: 15000,
             cookie: false,
             cors: {
                 origin: '*',

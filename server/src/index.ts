@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import routes from './routes/routes';
 import { PORT } from './config/config';
 import { connectDB } from './config/db';
@@ -31,7 +32,7 @@ app.use((req, res, next) => {
 // Middlewares
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-app.use(cors);
+app.use(cookieParser());
 
 /** Rules of our API */
 app.use((req, res, next) => {

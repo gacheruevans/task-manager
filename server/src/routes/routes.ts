@@ -21,15 +21,15 @@ const route = Router();
 route.post('/signup', signUp);
 route.post('/login', signIn);
 
-route.get('/task/:id',authorized, getTaskById);
-route.get('/tasks',authorized, getTasks);
-route.post('/task',authorized, createTask);
-route.put('/task/:id',authorized, editTask);
-route.delete('/task/:id',authorized, deleteTask);
+route.get('/task/:id', getTaskById);
+route.get('/tasks', getTasks);
+route.post('/task', createTask);
+route.put('/task/:id', editTask);
+route.delete('/task/:id', deleteTask);
 
-route.get('/user/:id',authorized, getUserById);
-route.get('/users',authorized, getUsers);
-route.put('/user/:id',authorized, editUser);
-route.delete('/user/:id',authorized, deleteUser);
+route.get('/user/:id', getUserById);
+route.get('/users', getUsers);
+route.put('/user/:id', editUser);
+route.delete('/user/:id', deleteUser);
 
 export default route;

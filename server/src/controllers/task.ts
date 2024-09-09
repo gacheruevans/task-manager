@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import  { Task }  from '../models/task';
 
 export const createTask = async(req: Request, res: Response, next: NextFunction) => {
-    const { title, description, status } = req.body;
+    const { description } = req.body;
     try {
-        const newTask = new Task({ title, description, status });
+        const newTask = new Task({ description });
         await newTask.save();
         
         if(!newTask) return res.status(400).json({message: "Error ocurred while creating task."});

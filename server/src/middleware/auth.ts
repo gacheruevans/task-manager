@@ -39,7 +39,6 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         try {
             const findUser = await User.findOne({ email });
             if (findUser) {
-                console.log('Find User--->', findUser);
                 return res.status(403).json({message: 'User already Exist!'});
             }
            
@@ -68,11 +67,9 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         if(!validPassword) throw next(errorHandler(401, 'Invalid credentials!'));
 
         const token = jwt.sign({ id: findUser._id }, JWT_SECRET_TOKEN);
-        const {password: pass, ...userInfo} = findUser;
-        res
-            .cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)})
-            .status(200)
-            .json(userInfo)
+        const userInfo = {...findUser, token}
+        // console.log('Token --->',token);
+        return res.cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)}).status(200).json(userInfo)
     } catch (error) {
         next(error);
     }

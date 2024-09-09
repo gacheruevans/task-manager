@@ -14,6 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   async function onSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
+
     const userData = {
       email: email,
       password: password,
@@ -35,6 +36,7 @@ const Login = () => {
         if(res.status === 200) {
           // const authdata = Cookies.get('access_token')
           // console.log(authdata);
+          console.log(res);
           navigate('/home'); 
         }
       });
