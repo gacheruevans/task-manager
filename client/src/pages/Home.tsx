@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import TaskList from '../components/TaskList';
 import AddTask from '../components/AddTask';
 import SocketContext from '../contexts/socket';
 import Navbar from '../components/Navbar';
 
+import Cookies from 'js-cookie';
+
 export interface IHomeProps {}
 
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const { socket, uid, users } = useContext(SocketContext).SocketState;
+  const [accessToken, setAccessToken] = useState('');
+
   return (
     <>
       <div className='flex flex-col  w-full'> 

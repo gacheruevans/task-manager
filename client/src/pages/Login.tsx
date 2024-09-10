@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import {useState } from 'react';
 import axios from 'axios';
 
 import { Link, useNavigate } from 'react-router-dom';
 import {BiUser} from 'react-icons/bi';
 import {AiOutlineUnlock} from 'react-icons/ai';
-
+import Cookies from 'js-cookie';
 
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+
   async function onSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
 
@@ -30,14 +31,18 @@ const Login = () => {
           navigate('/');
         }
         if(res.status === 404) {
-          alert('User dooes not exists');
+          alert('User does not exists');
           navigate('/register');
         }
         if(res.status === 200) {
-          // const authdata = Cookies.get('access_token')
-          // console.log(authdata);
-          console.log(res);
-          navigate('/home'); 
+          Cookies.set('access_token',res.data?.token);
+          Cookies.set('use_data', res.data?._doc?._id);
+          if(res.data?.access_token) {
+            navigate('/home');
+          }else{
+            navigate('/');
+          }
+          
         }
       });
     } catch (error) {

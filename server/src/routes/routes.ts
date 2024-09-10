@@ -14,12 +14,13 @@ import {
     deleteUser,
 } from '../controllers/user';
 
-import { authorized, signUp, signIn } from '../middleware/auth';
+import { authorized, signUp, signIn, signOut } from '../middleware/auth';
 
 const route = Router();
 
 route.post('/signup', signUp);
 route.post('/login', signIn);
+route.post('/signout', signOut);
 
 route.get('/task/:id', getTaskById);
 route.get('/tasks', getTasks);

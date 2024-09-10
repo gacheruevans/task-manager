@@ -65,20 +65,19 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         if (!findUser) throw next(errorHandler(404,'User does not Exist!'));
         const validPassword = bcryptjs.compareSync(password, findUser.password);
         if(!validPassword) throw next(errorHandler(401, 'Invalid credentials!'));
-
+        const pass = '';
         const token = jwt.sign({ id: findUser._id }, JWT_SECRET_TOKEN);
-        const userInfo = {...findUser, token}
-        // console.log('Token --->',token);
-        return res.cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)}).status(200).json(userInfo)
+        const userInfo = {...findUser, password: pass};
+        return res.cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)}).status(200).json({userInfo, access_token: token})
     } catch (error) {
         next(error);
     }
 };
 
-export const signout = async (req: Request, res: Response, next: NextFunction) => {
+export const signOut = async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.clearCookie('access_token');
-        res.status(200).json('User has been logged out!')
+        res.status(200).json('User has been logged out!');
     } catch (error) {
         next(error);
     }
