@@ -6,6 +6,10 @@ import { errorHandler } from '../utils/error';
 import { JWT_SECRET_TOKEN } from '../config/config';
 import { User } from '../models/user';
 
+interface UserDocument extends Document {
+  _doc: any; // You can type this more specifically if you know the structure
+}
+
 export const authorized = async(req: Request | any, res: Response, next: NextFunction) => {
     try {
         const {authorization} = req.headers;
@@ -63,11 +67,10 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         const { email, password } = req.body;
         const findUser = await User.findOne({ email });
         if (!findUser) throw next(errorHandler(404,'User does not Exist!'));
-        const validPassword = bcryptjs.compareSync(password, findUser.password);
+        const validPassword = bcryptjs.compareSync(password, findUser?.password);
         if(!validPassword) throw next(errorHandler(401, 'Invalid credentials!'));
-        const pass = '';
-        const token = jwt.sign({ id: findUser._id }, JWT_SECRET_TOKEN);
-        const userInfo = {...findUser, password: pass};
+        const token = jwt.sign({ id: findUser.toObject()?._id }, JWT_SECRET_TOKEN);
+        const {password: pass, ...userInfo} = findUser?.toObject();
         return res.cookie('access_token', token, {httpOnly: true, expires: new Date(Date.now() +  24 * 60 * 60 * 1000)}).status(200).json({userInfo, access_token: token})
     } catch (error) {
         next(error);

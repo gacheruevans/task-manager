@@ -35,7 +35,7 @@ const Login = () => {
           navigate('/register');
         }
         if(res.status === 200) {
-          Cookies.set('access_token',res.data?.token);
+          Cookies.set('access_token',res.data?.access_token);
           Cookies.set('use_data', res.data?._doc?._id);
           if(res.data?.access_token) {
             navigate('/home');

@@ -1,4 +1,6 @@
-import { useEffect,createContext, useContext, useState } from 'react';
+import { useEffect, createContext, useContext, useState } from 'react';
+import axios
+ from 'axios';
  const TaskContext = createContext();
 
  export const TaskProvider = ({children}) => {
@@ -8,10 +10,20 @@ import { useEffect,createContext, useContext, useState } from 'react';
     });
 
     useEffect(() => {
-        if(tasks.length > 0) {
+        setTasks(fetchTasks()) 
+        if (tasks.length > 0) {
             localStorage.setItem('tasks', JSON.stringify(tasks));
         }
     });
+
+    const fetchTasks = async() => {
+        try {
+            const { data } = await axios.get('http://localhost:5000/api/tasks');
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const addTask = (text) => {
         const newTask = { text, completed:false };

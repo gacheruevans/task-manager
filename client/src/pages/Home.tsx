@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TaskList from '../components/TaskList';
 import AddTask from '../components/AddTask';
 import SocketContext from '../contexts/socket';
 import Navbar from '../components/Navbar';
 
+import {useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 export interface IHomeProps {}
@@ -12,6 +13,17 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const { socket, uid, users } = useContext(SocketContext).SocketState;
   const [accessToken, setAccessToken] = useState('');
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token: string = Cookies.get('access_token') || '';
+    if(token) { 
+      setAccessToken(token);
+    }else{
+      navigate('/');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <div className='flex flex-col  w-full'> 
